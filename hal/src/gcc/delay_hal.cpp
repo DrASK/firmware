@@ -34,6 +34,9 @@ void HAL_Delay_Milliseconds(uint32_t millis)
 
 void HAL_Delay_Microseconds(uint32_t micros)
 {
-    boost::this_thread::sleep(boost::posix_time::milliseconds(1));
+    uint32_t const whole_millis = (micros / 1000);
+    uint32_t const fractional_millis = (micros % 1000);
+  
+    boost::this_thread::sleep(boost::posix_time::milliseconds(whole_millis + (fractional_millis == 0) ? 0 : 1));
 }
 
